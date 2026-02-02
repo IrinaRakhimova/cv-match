@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
-import { AnalysisRequest } from '../types/analysis';
+import { AnalysisRequest } from '../../types/analysis';
+import styles from './ResumeForm.module.css';
 
 interface ResumeFormProps {
   loading: boolean;
@@ -28,25 +29,25 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
   const isDisabled = loading || !resumeText.trim() || !jobDescription.trim();
 
   return (
-    <form onSubmit={handleSubmit} className="card">
-      <div className="card-header">
+    <form onSubmit={handleSubmit} className={styles.card}>
+      <div className={styles.cardHeader}>
         <div>
-          <h1 className="page-title">Resume match analyzer</h1>
-          <p className="page-subtitle">
+          <h1 className={styles.pageTitle}>Resume match analyzer</h1>
+          <p className={styles.pageSubtitle}>
             Paste your resume and a job description to see how well you match and what
             to improve.
           </p>
         </div>
       </div>
 
-      <div className="layout-grid">
+      <div className={styles.layoutGrid}>
         <div>
-          <label className="field-label">
+          <label className={styles.fieldLabel}>
             <span>Resume</span>
-            <span className="helper">Paste the full text</span>
+            <span className={styles.helper}>Paste the full text</span>
           </label>
           <textarea
-            className="textarea"
+            className={styles.textarea}
             placeholder="Paste your resume here..."
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
@@ -54,12 +55,12 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
         </div>
 
         <div>
-          <label className="field-label">
+          <label className={styles.fieldLabel}>
             <span>Job description</span>
-            <span className="helper">Paste the full posting</span>
+            <span className={styles.helper}>Paste the full posting</span>
           </label>
           <textarea
-            className="textarea"
+            className={styles.textarea}
             placeholder="Paste the job description here..."
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
@@ -67,11 +68,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
         </div>
       </div>
 
-      <div className="actions-row">
-        <span className="small-label">
+      <div className={styles.actionsRow}>
+        <span className={styles.smallLabel}>
           We send both texts for AI analysis.
         </span>
-        <button type="submit" className="button-primary" disabled={isDisabled}>
+        <button type="submit" className={styles.buttonPrimary} disabled={isDisabled}>
           {loading ? 'Analyzing…' : 'Analyze match'}
         </button>
       </div>

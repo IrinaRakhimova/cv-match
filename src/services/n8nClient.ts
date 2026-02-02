@@ -13,7 +13,6 @@ interface N8nAnalysisResponse {
   matchScore: number;
   missingSkills: string[];
   suggestions: string[];
-  // Allow additional fields; we only care about the ones above.
   [key: string]: unknown;
 }
 
@@ -71,7 +70,6 @@ export async function analyzeResumeMatch(request: AnalysisRequest): Promise<Anal
 
   const data = (await response.json()) as unknown;
 
-// 1️⃣ Validate top-level structure
 if (!Array.isArray(data) || data.length === 0) {
   throw new Error('Invalid response from n8n: expected a non-empty array.');
 }
@@ -79,12 +77,10 @@ if (!Array.isArray(data) || data.length === 0) {
 const firstItem = data[0] as Record<string, unknown>;
 const output = firstItem.output;
 
-// 2️⃣ Validate output exists
 if (!output) {
   throw new Error('Invalid response from n8n: missing output field.');
 }
 
-// 3️⃣ Validate the actual payload
 const validated = validateN8nResponse(output);
   return {
     

@@ -1,5 +1,6 @@
 import React from 'react';
-import { AnalysisResult } from '../types/analysis';
+import { AnalysisResult } from '../../types/analysis';
+import styles from './AnalysisResult.module.css';
 
 interface AnalysisResultProps {
   loading: boolean;
@@ -13,37 +14,37 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
   result,
 }) => {
   return (
-    <section className="card">
-      <div className="result-header">
+    <section className={styles.card}>
+      <div className={styles.resultHeader}>
         <div>
-          <h2 className="section-title">Match insights</h2>
-          <p className="section-subtitle">
+          <h2 className={styles.sectionTitle}>Match insights</h2>
+          <p className={styles.sectionSubtitle}>
             Match score, missing skills, and concrete resume improvements powered by LLM flow.
           </p>
         </div>
-        <div className="score-circle">
-          <span className="value">
+        <div className={styles.scoreCircle}>
+          <span className={styles.scoreValue}>
             {result ? Math.round(result.matchScore) : loading ? '…' : '--'}
           </span>
-          <span className="label">match score</span>
+          <span className={styles.scoreLabel}>match score</span>
         </div>
       </div>
 
       {error && (
-        <div className="error-box">
+        <div className={styles.errorBox}>
           <strong>Something went wrong.</strong> {error}
         </div>
       )}
 
       {!error && !result && !loading && (
-        <p className="muted">
+        <p className={styles.muted}>
           Run an analysis to see how well your resume aligns to this role and what you
           should tweak.
         </p>
       )}
 
       {loading && (
-        <p className="muted">
+        <p className={styles.muted}>
           Analyzing via n8n… this may take a few seconds.
         </p>
       )}
@@ -51,13 +52,13 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
       {result && !error && (
         <>
           <section>
-            <h3 className="section-title">Missing or weak skills</h3>
+            <h3 className={styles.sectionTitle}>Missing or weak skills</h3>
             {result.missingSkills.length === 0 ? (
-              <p className="muted">No clear gaps detected compared to this job posting.</p>
+              <p className={styles.muted}>No clear gaps detected compared to this job posting.</p>
             ) : (
-              <div className="pill-row">
+              <div className={styles.pillRow}>
                 {result.missingSkills.map((skill) => (
-                  <span className="pill" key={skill}>
+                  <span className={styles.pill} key={skill}>
                     {skill}
                   </span>
                 ))}
@@ -65,14 +66,14 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
             )}
           </section>
 
-          <section style={{ marginTop: '1rem' }}>
-            <h3 className="section-title">Suggested resume improvements</h3>
+          <section className={styles.sectionSpacing}>
+            <h3 className={styles.sectionTitle}>Suggested resume improvements</h3>
             {result.suggestions.length === 0 ? (
-              <p className="muted">
+              <p className={styles.muted}>
                 Your resume already covers the key requirements for this role.
               </p>
             ) : (
-              <ul className="bullet-list">
+              <ul className={styles.bulletList}>
                 {result.suggestions.map((suggestion, index) => (
                   <li key={index}>{suggestion}</li>
                 ))}
