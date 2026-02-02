@@ -1,6 +1,6 @@
 import { AnalysisRequest, AnalysisResult } from '../types/analysis';
 
-const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook-test/cv-job-match";
+const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook/cv-job-match";
 
 if (!N8N_ANALYZE_URL) {
   // eslint-disable-next-line no-console
