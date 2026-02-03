@@ -1,0 +1,263 @@
+.card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.7);
+  min-height: 200px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.25rem 1rem;
+    border-radius: 0.875rem;
+    min-height: 180px;
+  }
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .resultHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.scoreCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  border: 4px solid rgba(56, 189, 248, 0.8);
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.15rem;
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.2),
+    0 8px 24px rgba(15, 23, 42, 0.5),
+    0 0 32px rgba(56, 189, 248, 0.15);
+  flex-shrink: 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .scoreCircle {
+    width: 88px;
+    height: 88px;
+    border-width: 3px;
+    padding: 0.4rem;
+  }
+}
+
+.scoreSpinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(56, 189, 248, 0.2);
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 600px) {
+  .scoreSpinner {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scoreValue {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e5e7eb;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .scoreValue {
+    font-size: 1.65rem;
+  }
+}
+
+.scoreLabel {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+  .scoreLabel {
+    font-size: 0.65rem;
+  }
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pill {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  font-size: 0.875rem;
+  color: #fecaca;
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.pillMatch {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  font-size: 0.875rem;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.comparisonBox {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.comparisonRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comparisonRow:last-of-type {
+  margin-bottom: 0;
+}
+
+.comparisonLabel {
+  font-size: 0.9375rem;
+  color: #94a3b8;
+  min-width: 8rem;
+}
+
+@media (max-width: 600px) {
+  .comparisonLabel {
+    min-width: 6.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+.comparisonValue {
+  font-size: 1rem;
+  color: #e5e7eb;
+}
+
+@media (max-width: 600px) {
+  .comparisonValue {
+    font-size: 0.9375rem;
+    word-break: break-word;
+  }
+}
+
+.comparisonNotes {
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  font-size: 0.9375rem;
+  color: #94a3b8;
+}
+
+.matchYes {
+  color: #86efac;
+  font-weight: 600;
+}
+
+.matchNo {
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+.dataMissing {
+  color: #94a3b8;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.sectionTitle {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.sectionSubtitle {
+  font-size: 0.9375rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.bulletList {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9375rem;
+  color: #cbd5e1;
+}
+
+.bulletList li + li {
+  margin-top: 0.35rem;
+}
+
+.muted {
+  color: #64748b;
+  font-size: 0.9375rem;
+}
+
+.errorBox {
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fecaca;
+  font-size: 0.9375rem;
+}
+
+.sectionSpacing {
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .sectionSpacing {
+    margin-top: 0.75rem;
+  }
+}

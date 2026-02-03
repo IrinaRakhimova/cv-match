@@ -1,6 +1,11 @@
-import { AnalysisRequest, AnalysisResult } from '../types/analysis';
+import {
+  AnalysisRequest,
+  AnalysisResult,
+  LocationComparison,
+  ExperienceComparison,
+} from '../types/analysis';
 
-const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook/cv-job-match";
+const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook-test/cv-job-match";
 
 if (!N8N_ANALYZE_URL) {
   // eslint-disable-next-line no-console
@@ -11,14 +16,38 @@ if (!N8N_ANALYZE_URL) {
 
 interface N8nAnalysisResponse {
   matchScore: number;
+  matchingSkills: string[];
   missingSkills: string[];
+  locationComparison: LocationComparison;
+  experienceComparison: ExperienceComparison;
   suggestions: string[];
-  // Allow additional fields; we only care about the ones above.
   [key: string]: unknown;
 }
 
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === 'string');
+}
+
+function isLocationComparison(value: unknown): value is LocationComparison {
+  if (typeof value !== 'object' || value === null) return false;
+  const o = value as Record<string, unknown>;
+  return (
+    typeof o.resumeLocation === 'string' &&
+    typeof o.jobLocation === 'string' &&
+    typeof o.isMatch === 'boolean' &&
+    typeof o.notes === 'string'
+  );
+}
+
+function isExperienceComparison(value: unknown): value is ExperienceComparison {
+  if (typeof value !== 'object' || value === null) return false;
+  const o = value as Record<string, unknown>;
+  return (
+    typeof o.resumeYears === 'number' &&
+    typeof o.requiredYears === 'number' &&
+    typeof o.meetsRequirement === 'boolean' &&
+    typeof o.notes === 'string'
+  );
 }
 
 function validateN8nResponse(data: unknown): N8nAnalysisResponse {
@@ -27,14 +56,33 @@ function validateN8nResponse(data: unknown): N8nAnalysisResponse {
   }
 
   const obj = data as Record<string, unknown>;
-  const { matchScore, missingSkills, suggestions } = obj;
+  const {
+    matchScore,
+    matchingSkills,
+    missingSkills,
+    locationComparison,
+    experienceComparison,
+    suggestions,
+  } = obj;
 
   if (typeof matchScore !== 'number') {
     throw new Error('Invalid response from n8n: matchScore must be a number.');
   }
 
+  if (!isStringArray(matchingSkills)) {
+    throw new Error('Invalid response from n8n: matchingSkills must be a string array.');
+  }
+
   if (!isStringArray(missingSkills)) {
     throw new Error('Invalid response from n8n: missingSkills must be a string array.');
+  }
+
+  if (!isLocationComparison(locationComparison)) {
+    throw new Error('Invalid response from n8n: locationComparison must be a valid object.');
+  }
+
+  if (!isExperienceComparison(experienceComparison)) {
+    throw new Error('Invalid response from n8n: experienceComparison must be a valid object.');
   }
 
   if (!isStringArray(suggestions)) {
@@ -71,7 +119,6 @@ export async function analyzeResumeMatch(request: AnalysisRequest): Promise<Anal
 
   const data = (await response.json()) as unknown;
 
-// 1️⃣ Validate top-level structure
 if (!Array.isArray(data) || data.length === 0) {
   throw new Error('Invalid response from n8n: expected a non-empty array.');
 }
@@ -79,18 +126,19 @@ if (!Array.isArray(data) || data.length === 0) {
 const firstItem = data[0] as Record<string, unknown>;
 const output = firstItem.output;
 
-// 2️⃣ Validate output exists
 if (!output) {
   throw new Error('Invalid response from n8n: missing output field.');
 }
 
-// 3️⃣ Validate the actual payload
 const validated = validateN8nResponse(output);
-  return {
-    
+  const result: AnalysisResult = {
     matchScore: validated.matchScore,
+    matchingSkills: validated.matchingSkills,
     missingSkills: validated.missingSkills,
+    locationComparison: validated.locationComparison,
+    experienceComparison: validated.experienceComparison,
     suggestions: validated.suggestions,
     rawResponse: data,
   };
+  return result;
 }

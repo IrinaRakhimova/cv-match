@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
 
-  // Entry point for React + TS
   entry: './src/index.tsx',
 
   output: {
@@ -13,30 +12,44 @@ module.exports = {
     clean: true,
   },
 
-  // Resolve imports without extensions
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },
 
   module: {
     rules: [
-      // TypeScript + JSX
       {
         test: /\.(ts|tsx)$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
 
-      // ✅ GLOBAL CSS (no modules)
+      {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+                namedExport: false, 
+                exportLocalsConvention: 'as-is',
+              },
+            },
+          },
+        ],
+      },
+
       {
         test: /\.css$/,
+        exclude: /\.module\.css$/,
         use: ['style-loader', 'css-loader'],
       },
     ],
   },
 
   plugins: [
-    // Injects bundle.js into index.html automatically
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
