@@ -1,13 +1,15 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { AnalysisRequest } from '../../types/analysis';
 import styles from './ResumeForm.module.css';
 
 interface ResumeFormProps {
   loading: boolean;
   onAnalyze: (request: AnalysisRequest) => void;
+  onReset?: () => void;
+  showNextButton?: boolean;
 }
 
-export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) => {
+export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onReset, showNextButton }) => {
   const [resumeText, setResumeText] = useState('');
   const [jobDescription, setJobDescription] = useState('');
 
@@ -26,6 +28,12 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
     onAnalyze(payload);
   };
 
+  const handleNextPosition = () => {
+    setResumeText('');
+    setJobDescription('');
+    onReset?.();
+  };
+
   const isDisabled = loading || !resumeText.trim() || !jobDescription.trim();
 
   return (
@@ -41,10 +49,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
       </div>
 
       <div className={styles.layoutGrid}>
-        <div>
-          <label className={styles.fieldLabel}>
+        <div className={styles.fieldResume}>
+          <label className={`${styles.fieldLabel} ${styles.fieldLabelResume}`}>
             <span>Resume</span>
-            <span className={styles.helper}>Paste the full text</span>
           </label>
           <textarea
             className={styles.textarea}
@@ -54,10 +61,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
           />
         </div>
 
-        <div>
-          <label className={styles.fieldLabel}>
+        <div className={styles.fieldJob}>
+          <label className={`${styles.fieldLabel} ${styles.fieldLabelJob}`}>
             <span>Job description</span>
-            <span className={styles.helper}>Paste the full posting</span>
           </label>
           <textarea
             className={styles.textarea}
@@ -69,12 +75,25 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze }) =>
       </div>
 
       <div className={styles.actionsRow}>
-        <span className={styles.smallLabel}>
-          We send both texts for AI analysis.
-        </span>
-        <button type="submit" className={styles.buttonPrimary} disabled={isDisabled}>
-          {loading ? 'Analyzing…' : 'Analyze match'}
-        </button>
+        {showNextButton ? (
+          <>
+            <button type="button" className={styles.buttonSecondary} onClick={handleNextPosition}>
+              Next position
+            </button>
+            <button type="submit" className={styles.buttonPrimary} disabled={isDisabled}>
+              {loading ? 'Analyzing…' : 'Re-analyze'}
+            </button>
+          </>
+        ) : (
+          <>
+            <span className={styles.smallLabel}>
+              We send both texts for AI analysis.
+            </span>
+            <button type="submit" className={styles.buttonPrimary} disabled={isDisabled}>
+              {loading ? 'Analyzing…' : 'Analyze match'}
+            </button>
+          </>
+        )}
       </div>
     </form>
   );

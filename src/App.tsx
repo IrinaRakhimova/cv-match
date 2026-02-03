@@ -1,16 +1,36 @@
 import React from 'react';
 import { ResumeForm } from './components/form/ResumeForm';
 import { AnalysisResultView } from './components/result/AnalysisResult';
+import { TextDisplay } from './components/display/TextDisplay';
 import { useResumeAnalysis } from './hooks/useResumeResults';
 import styles from './App.module.css';
 
 export const App: React.FC = () => {
-  const { loading, error, result, analyze } = useResumeAnalysis();
+  const { loading, error, result, currentRequest, analyze, reset } = useResumeAnalysis();
+  const hasAnalysis = currentRequest !== null;
+
+  const handleNextPosition = () => {
+    reset();
+  };
 
   return (
-    <div className={styles.appShell}>
-      <ResumeForm loading={loading} onAnalyze={analyze} />
-      <AnalysisResultView loading={loading} error={error} result={result} />
+    <div className={`${styles.appShell} ${!hasAnalysis ? styles.appShellStartPage : ''}`}>
+      {!hasAnalysis ? (
+        <div className={styles.startPageContainer}>
+          <ResumeForm loading={loading} onAnalyze={analyze} />
+        </div>
+      ) : (
+        <>
+          <div className={styles.headerWithButton}>
+            <h1 className={styles.pageTitle}>Resume Match Analysis</h1>
+            <button onClick={handleNextPosition} className={styles.nextButton}>
+              Analyze next position
+            </button>
+          </div>
+          <AnalysisResultView loading={loading} error={error} result={result} />
+          <TextDisplay request={currentRequest} />
+        </>
+      )}
     </div>
   );
 };

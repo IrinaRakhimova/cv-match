@@ -6,12 +6,14 @@ interface UseResumeAnalysisState {
   loading: boolean;
   error: string | null;
   result: AnalysisResult | null;
+  currentRequest: AnalysisRequest | null;
 }
 
 interface UseResumeAnalysis {
   loading: boolean;
   error: string | null;
   result: AnalysisResult | null;
+  currentRequest: AnalysisRequest | null;
   analyze: (request: AnalysisRequest) => Promise<void>;
   reset: () => void;
 }
@@ -21,6 +23,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
     loading: false,
     error: null,
     result: null,
+    currentRequest: null,
   });
 
   const analyze = useCallback(async (request: AnalysisRequest) => {
@@ -28,6 +31,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
       ...prev,
       loading: true,
       error: null,
+      currentRequest: request,
     }));
 
     try {
@@ -37,6 +41,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
         loading: false,
         error: null,
         result,
+        currentRequest: request,
       });
     } catch (err) {
       const message =
@@ -46,6 +51,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
         loading: false,
         error: message,
         result: null,
+        currentRequest: request,
       });
     }
   }, []);
@@ -55,6 +61,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
       loading: false,
       error: null,
       result: null,
+      currentRequest: null,
     });
   }, []);
 
@@ -62,6 +69,7 @@ export function useResumeAnalysis(): UseResumeAnalysis {
     loading: state.loading,
     error: state.error,
     result: state.result,
+    currentRequest: state.currentRequest,
     analyze,
     reset,
   };
