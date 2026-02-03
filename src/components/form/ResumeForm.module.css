@@ -80,17 +80,44 @@
   margin-bottom: 0.4rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #e2e8f0;
+  gap: 0.5rem;
 }
 
 .fieldLabelResume {
   color: #a7f3d0;
-  margin-bottom: 20px;
+  margin-bottom: 0.4rem;
 }
 
 .fieldLabelJob {
   color: #bae6fd;
-  margin-bottom: 20px;
+  margin-bottom: 0.4rem;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.charCountWarning {
+  color: #fbbf24;
+}
+
+.charCountError {
+  color: #f87171;
+}
+
+.validationError {
+  font-size: 0.8125rem;
+  color: #f87171;
+  margin-bottom: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
 }
 
 .helper {
@@ -111,6 +138,15 @@
   line-height: 1.4;
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.5) rgba(15, 23, 42, 0.4);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.textareaWarning {
+  border-color: rgba(251, 191, 36, 0.4) !important;
+}
+
+.textareaError {
+  border-color: rgba(248, 113, 113, 0.5) !important;
 }
 
 .fieldResume .textarea {
