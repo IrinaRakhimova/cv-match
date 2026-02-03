@@ -115,7 +115,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
           )}
           <textarea
             className={`${styles.textarea} ${resumeWarning ? styles.textareaWarning : ''} ${resumeLength > MAX_RESUME_LENGTH ? styles.textareaError : ''}`}
-            placeholder="Paste your resume here... (min. 50 characters)"
+            placeholder="Paste your resume here..."
             value={resumeText}
             onChange={handleResumeChange}
             maxLength={MAX_RESUME_LENGTH}
@@ -143,7 +143,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
           )}
           <textarea
             className={`${styles.textarea} ${jobDescriptionWarning ? styles.textareaWarning : ''} ${jobDescriptionLength > MAX_JOB_DESCRIPTION_LENGTH ? styles.textareaError : ''}`}
-            placeholder="Paste the job description here... (min. 50 characters)"
+            placeholder="Paste the job description here..."
             value={jobDescription}
             onChange={handleJobDescriptionChange}
             maxLength={MAX_JOB_DESCRIPTION_LENGTH}
