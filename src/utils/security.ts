@@ -39,15 +39,6 @@ export function validateTextContent(text: string): { valid: boolean; reason?: st
     return { valid: false, reason: 'Text contains excessive repetition' };
   }
 
-  // Check for reasonable character diversity (avoid single character spam)
-  if (text.length > 100) {
-    const uniqueChars = new Set(text.toLowerCase().replace(/\s/g, '')).size;
-    const diversityRatio = uniqueChars / text.length;
-    if (diversityRatio < 0.1) {
-      return { valid: false, reason: 'Text lacks sufficient character diversity' };
-    }
-  }
-
   return { valid: true };
 }
 
