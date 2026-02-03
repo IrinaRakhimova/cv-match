@@ -59,28 +59,13 @@ function validateN8nResponse(data: unknown): N8nAnalysisResponse {
     suggestions,
   } = obj;
 
-  if (typeof matchScore !== 'number') {
-    throw new Error('Invalid response from n8n: matchScore must be a number.');
-  }
-
-  if (!isStringArray(matchingSkills)) {
-    throw new Error('Invalid response from n8n: matchingSkills must be a string array.');
-  }
-
-  if (!isStringArray(missingSkills)) {
-    throw new Error('Invalid response from n8n: missingSkills must be a string array.');
-  }
-
-  if (!isLocationComparison(locationComparison)) {
-    throw new Error('Invalid response from n8n: locationComparison must be a valid object.');
-  }
-
-  if (!isExperienceComparison(experienceComparison)) {
-    throw new Error('Invalid response from n8n: experienceComparison must be a valid object.');
-  }
-
-  if (!isStringArray(suggestions)) {
-    throw new Error('Invalid response from n8n: suggestions must be a string array.');
+  if (typeof matchScore !== 'number' || 
+    !isStringArray(matchingSkills) || 
+    !isStringArray(missingSkills) || 
+    !isLocationComparison(locationComparison) ||
+    !isExperienceComparison(experienceComparison) ||
+    !isStringArray(suggestions)) {
+    throw new Error('Invalid response from n8n.');
   }
 
   return obj as N8nAnalysisResponse;

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AnalysisRequest } from '../../types/analysis';
 import styles from './ResumeForm.module.css';
 
@@ -13,7 +13,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onRe
   const [resumeText, setResumeText] = useState('');
   const [jobDescription, setJobDescription] = useState('');
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!resumeText.trim() || !jobDescription.trim() || loading) {
