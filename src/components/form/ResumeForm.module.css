@@ -95,11 +95,26 @@
   margin-bottom: 0.4rem;
 }
 
+.textareaWrapper {
+  position: relative;
+}
+
 .charCount {
   font-size: 0.75rem;
   color: #94a3b8;
   font-weight: 400;
   white-space: nowrap;
+}
+
+.charCountBottom {
+  position: absolute;
+  bottom: -1.25rem;
+  right: 0;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 400;
+  white-space: nowrap;
+  padding-top: 0.25rem;
 }
 
 .charCountWarning {
@@ -165,6 +180,11 @@
     padding: 0.65rem 0.75rem;
     font-size: 16px; 
   }
+  
+  .charCountBottom {
+    bottom: -1.1rem;
+    font-size: 0.6875rem;
+  }
 }
 
 .textarea::placeholder {
@@ -218,7 +238,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 @media (max-width: 600px) {

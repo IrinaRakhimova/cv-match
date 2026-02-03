@@ -98,10 +98,6 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
         <div className={styles.fieldResume}>
           <label className={`${styles.fieldLabel} ${styles.fieldLabelResume}`}>
             <span>Resume</span>
-            <span className={`${styles.charCount} ${resumeWarning ? styles.charCountWarning : ''} ${resumeLength > MAX_RESUME_LENGTH ? styles.charCountError : ''}`}>
-              {resumeLength.toLocaleString()} / {MAX_RESUME_LENGTH.toLocaleString()} chars
-              {resumeWords > 0 && ` • ${resumeWords.toLocaleString()} words`}
-            </span>
           </label>
           {resumeTrimmed.length > 0 && resumeTrimmed.length < MIN_LENGTH && (
             <div className={styles.validationError}>
@@ -113,23 +109,25 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
               Resume exceeds maximum length of {MAX_RESUME_LENGTH.toLocaleString()} characters
             </div>
           )}
-          <textarea
-            className={`${styles.textarea} ${resumeWarning ? styles.textareaWarning : ''} ${resumeLength > MAX_RESUME_LENGTH ? styles.textareaError : ''}`}
-            placeholder="Paste your resume here..."
-            value={resumeText}
-            onChange={handleResumeChange}
-            maxLength={MAX_RESUME_LENGTH}
-            rows={8}
-          />
+          <div className={styles.textareaWrapper}>
+            <textarea
+              className={`${styles.textarea} ${resumeWarning ? styles.textareaWarning : ''} ${resumeLength > MAX_RESUME_LENGTH ? styles.textareaError : ''}`}
+              placeholder="Paste your resume here..."
+              value={resumeText}
+              onChange={handleResumeChange}
+              maxLength={MAX_RESUME_LENGTH}
+              rows={8}
+            />
+            <span className={`${styles.charCount} ${styles.charCountBottom} ${resumeWarning ? styles.charCountWarning : ''} ${resumeLength > MAX_RESUME_LENGTH ? styles.charCountError : ''}`}>
+              {resumeLength.toLocaleString()} / {MAX_RESUME_LENGTH.toLocaleString()} 
+              {resumeWords > 0 && ` • ${resumeWords.toLocaleString()} words`}
+            </span>
+          </div>
         </div>
 
         <div className={styles.fieldJob}>
           <label className={`${styles.fieldLabel} ${styles.fieldLabelJob}`}>
             <span>Job description</span>
-            <span className={`${styles.charCount} ${jobDescriptionWarning ? styles.charCountWarning : ''} ${jobDescriptionLength > MAX_JOB_DESCRIPTION_LENGTH ? styles.charCountError : ''}`}>
-              {jobDescriptionLength.toLocaleString()} / {MAX_JOB_DESCRIPTION_LENGTH.toLocaleString()} chars
-              {jobDescriptionWords > 0 && ` • ${jobDescriptionWords.toLocaleString()} words`}
-            </span>
           </label>
           {jobDescriptionTrimmed.length > 0 && jobDescriptionTrimmed.length < MIN_LENGTH && (
             <div className={styles.validationError}>
@@ -141,14 +139,20 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
               Job description exceeds maximum length of {MAX_JOB_DESCRIPTION_LENGTH.toLocaleString()} characters
             </div>
           )}
-          <textarea
-            className={`${styles.textarea} ${jobDescriptionWarning ? styles.textareaWarning : ''} ${jobDescriptionLength > MAX_JOB_DESCRIPTION_LENGTH ? styles.textareaError : ''}`}
-            placeholder="Paste the job description here..."
-            value={jobDescription}
-            onChange={handleJobDescriptionChange}
-            maxLength={MAX_JOB_DESCRIPTION_LENGTH}
-            rows={8}
-          />
+          <div className={styles.textareaWrapper}>
+            <textarea
+              className={`${styles.textarea} ${jobDescriptionWarning ? styles.textareaWarning : ''} ${jobDescriptionLength > MAX_JOB_DESCRIPTION_LENGTH ? styles.textareaError : ''}`}
+              placeholder="Paste the job description here..."
+              value={jobDescription}
+              onChange={handleJobDescriptionChange}
+              maxLength={MAX_JOB_DESCRIPTION_LENGTH}
+              rows={8}
+            />
+            <span className={`${styles.charCount} ${styles.charCountBottom} ${jobDescriptionWarning ? styles.charCountWarning : ''} ${jobDescriptionLength > MAX_JOB_DESCRIPTION_LENGTH ? styles.charCountError : ''}`}>
+              {jobDescriptionLength.toLocaleString()} / {MAX_JOB_DESCRIPTION_LENGTH.toLocaleString()} 
+              {jobDescriptionWords > 0 && ` • ${jobDescriptionWords.toLocaleString()} words`}
+            </span>
+          </div>
         </div>
       </div>
 
