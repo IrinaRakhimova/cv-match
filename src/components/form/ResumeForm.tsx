@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AnalysisRequest } from '../../types/analysis';
+import { sanitizeTextInput } from '../../utils/security';
 import styles from './ResumeForm.module.css';
 
 interface ResumeFormProps {
@@ -7,6 +8,8 @@ interface ResumeFormProps {
   onAnalyze: (request: AnalysisRequest) => void;
   onReset?: () => void;
   showNextButton?: boolean;
+  canMakeRequest?: boolean;
+  remainingRequests?: number;
 }
 
 const MAX_RESUME_LENGTH = 10000; 
@@ -17,14 +20,14 @@ const countWords = (text: string): number => {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 };
 
-const sanitizeInput = (text: string): string => {
-  return text
-    .replace(/\s+/g, ' ') 
-    .replace(/\n{3,}/g, '\n\n') 
-    .trim();
-};
-
-export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onReset, showNextButton }) => {
+export const ResumeForm: React.FC<ResumeFormProps> = ({ 
+  loading, 
+  onAnalyze, 
+  onReset, 
+  showNextButton,
+  canMakeRequest = true,
+  remainingRequests = 10,
+}) => {
   const [resumeText, setResumeText] = useState('');
   const [jobDescription, setJobDescription] = useState('');
 
@@ -56,7 +59,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onRe
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!isResumeValid || !isJobDescriptionValid || loading) {
@@ -64,8 +67,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onRe
     }
 
     const payload: AnalysisRequest = {
-      resumeText: sanitizeInput(resumeText),
-      jobDescription: sanitizeInput(jobDescription),
+      resumeText: sanitizeTextInput(resumeText),
+      jobDescription: sanitizeTextInput(jobDescription),
     };
 
     onAnalyze(payload);
@@ -161,9 +164,16 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ loading, onAnalyze, onRe
           </>
         ) : (
           <>
-            <span className={styles.smallLabel}>
-              We send both texts for AI analysis.
-            </span>
+            <div className={styles.infoSection}>
+              <span className={styles.smallLabel}>
+                We send both texts for AI analysis.
+              </span>
+              {remainingRequests < 5 && remainingRequests > 0 && (
+                <span className={styles.rateLimitInfo}>
+                  {remainingRequests} request{remainingRequests !== 1 ? 's' : ''} remaining
+                </span>
+              )}
+            </div>
             <button type="submit" className={styles.buttonPrimary} disabled={isDisabled}>
               {loading ? 'Analyzing…' : 'Analyze match'}
             </button>

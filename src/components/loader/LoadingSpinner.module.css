@@ -50,3 +50,26 @@
     font-size: 0.9375rem;
   }
 }
+
+.cancelButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  background: rgba(15, 23, 42, 1);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+.cancelButton:active {
+  transform: scale(0.98);
+}

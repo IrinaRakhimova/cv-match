@@ -281,6 +281,13 @@
   border-color: rgba(148, 163, 184, 0.6);
 }
 
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-end;
+}
+
 .smallLabel {
   font-size: 0.875rem;
   color: #94a3b8;
@@ -292,7 +299,18 @@
   margin-right: 0.25rem;
 }
 
+.rateLimitInfo {
+  font-size: 0.75rem;
+  color: #fbbf24;
+  font-weight: 500;
+}
+
 @media (max-width: 600px) {
+  .infoSection {
+    align-items: center;
+    text-align: center;
+  }
+  
   .smallLabel {
     text-align: center;
   }

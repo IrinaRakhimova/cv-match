@@ -1,18 +1,20 @@
 import React from 'react';
 import { AnalysisResult } from '../../types/analysis';
-import { LoadingSpinner } from '../common/LoadingSpinner';
+import { LoadingSpinner } from '../loader/LoadingSpinner';
 import styles from './AnalysisResult.module.css';
 
 interface AnalysisResultProps {
   loading: boolean;
   error: string | null;
   result: AnalysisResult | null;
+  onCancel?: () => void;
 }
 
 export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
   loading,
   error,
   result,
+  onCancel,
 }) => {
   return (
     <section className={styles.card}>
@@ -41,7 +43,7 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
       )}
 
       {loading && (
-        <LoadingSpinner />
+        <LoadingSpinner onCancel={onCancel} />
       )}
 
       {result && !error && (
