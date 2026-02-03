@@ -46,7 +46,7 @@ Webhook Trigger → Data Extraction → AI Agent (OpenAI) → Response Formattin
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd SlushNew
+cd cv-match
 ```
 
 2. Install dependencies:
@@ -55,7 +55,6 @@ npm install
 ```
 
 3. Configure the n8n webhook URL:
-   - The webhook URL is currently hardcoded in `src/services/n8nClient.ts`
    - Update `N8N_ANALYZE_URL` with your n8n webhook endpoint
 
 ### Development
@@ -141,4 +140,7 @@ The project uses **CSS Modules** for component-scoped styling:
 - Safari (latest)
 - Edge (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Demo URL
+https://cv-match-1-n6uu.onrender.com/
 
