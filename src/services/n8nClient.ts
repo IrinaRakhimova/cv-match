@@ -5,7 +5,7 @@ import {
   ExperienceComparison,
 } from '../types/analysis';
 
-const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook/cv-job-match";
+const N8N_ANALYZE_URL = process.env.N8N_ANALYZE_URL!;
 
 
 interface N8nAnalysisResponse {

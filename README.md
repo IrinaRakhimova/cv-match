@@ -22,37 +22,6 @@ A modern web application that analyzes how well your resume matches a job descri
 - **CSS Modules** - Scoped styling
 - **n8n** - Backend workflow automation (via webhook)
 
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── form/
-│   │   ├── ResumeForm.tsx          # Main form component
-│   │   └── ResumeForm.module.css   # Form styles
-│   ├── result/
-│   │   ├── AnalysisResult.tsx      # Results display component
-│   │   └── AnalysisResult.module.css
-│   ├── display/
-│   │   ├── TextDisplay.tsx         # CV & job description display
-│   │   └── TextDisplay.module.css
-│   └── common/
-│       ├── LoadingSpinner.tsx      # Loading indicator
-│       └── LoadingSpinner.module.css
-├── hooks/
-│   └── useResumeResults.tsx        # Analysis state management
-├── services/
-│   └── n8nClient.ts                # n8n API integration
-├── types/
-│   ├── analysis.ts                 # TypeScript type definitions
-│   └── css-modules.d.ts            # CSS Modules type declarations
-├── styles/
-│   └── global.css                  # Global styles
-├── App.tsx                         # Main app component
-├── App.module.css                  # App-level styles
-└── index.tsx                       # Entry point
-```
-
 ## Workflow Structure
 Webhook Trigger → Data Extraction → AI Agent (OpenAI) → Response Formatting → Webhook Response
 

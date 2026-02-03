@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');        
+require('dotenv').config();               
 
 module.exports = {
   mode: 'development',
@@ -33,7 +35,7 @@ module.exports = {
             options: {
               modules: {
                 localIdentName: '[name]__[local]__[hash:base64:5]',
-                namedExport: false, 
+                namedExport: false,
                 exportLocalsConvention: 'as-is',
               },
             },
@@ -52,6 +54,10 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+
+    new webpack.EnvironmentPlugin({
+      N8N_ANALYZE_URL: '', 
     }),
   ],
 
