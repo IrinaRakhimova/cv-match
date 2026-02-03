@@ -5,14 +5,8 @@ import {
   ExperienceComparison,
 } from '../types/analysis';
 
-const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook-test/cv-job-match";
+const N8N_ANALYZE_URL = "https://slush-test.app.n8n.cloud/webhook/cv-job-match";
 
-if (!N8N_ANALYZE_URL) {
-  // eslint-disable-next-line no-console
-  console.warn(
-    '[n8nClient] VITE_N8N_ANALYZE_URL is not set. Configure your n8n webhook URL in a .env file.',
-  );
-}
 
 interface N8nAnalysisResponse {
   matchScore: number;
