@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const N8N_ANALYZE_URL = process.env.N8N_ANALYZE_URL || '';
 const REQUEST_TIMEOUT_MS = 30000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
 
@@ -54,6 +56,15 @@ app.post('/api/analyze', async (req, res) => {
     res.status(502).json({ error: 'Analysis service error.' });
   }
 });
+
+// In production, serve the built React app so one deploy handles both API and frontend
+if (isProduction) {
+  const distPath = path.join(__dirname, 'dist');
+  app.use(express.static(distPath));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
