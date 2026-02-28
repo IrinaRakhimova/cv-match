@@ -32,35 +32,6 @@
   }
 }
 
-.scoreCircle {
-  width: 100px;
-  height: 100px;
-  border-radius: 999px;
-  border: 4px solid rgba(56, 189, 248, 0.8);
-  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.15rem;
-  box-shadow:
-    0 0 0 1px rgba(56, 189, 248, 0.2),
-    0 8px 24px rgba(15, 23, 42, 0.5),
-    0 0 32px rgba(56, 189, 248, 0.15);
-  flex-shrink: 0;
-  padding: 0.5rem;
-  box-sizing: border-box;
-}
-
-@media (max-width: 600px) {
-  .scoreCircle {
-    width: 88px;
-    height: 88px;
-    border-width: 3px;
-    padding: 0.4rem;
-  }
-}
-
 .scoreSpinner {
   width: 36px;
   height: 36px;
@@ -81,39 +52,6 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-.scoreValue {
-  display: block;
-  font-size: 2rem;
-  font-weight: 800;
-  color: #e5e7eb;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-align: center;
-}
-
-@media (max-width: 600px) {
-  .scoreValue {
-    font-size: 1.65rem;
-  }
-}
-
-.scoreLabel {
-  display: block;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #94a3b8;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.2;
-}
-
-@media (max-width: 600px) {
-  .scoreLabel {
-    font-size: 0.65rem;
   }
 }
 

@@ -1,0 +1,51 @@
+.section {
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .section {
+    margin-top: 0.75rem;
+  }
+}
+
+.sectionTitle {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pill {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  font-size: 0.875rem;
+  color: #fecaca;
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.pillMatch {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  font-size: 0.875rem;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.muted {
+  color: #64748b;
+  font-size: 0.9375rem;
+}

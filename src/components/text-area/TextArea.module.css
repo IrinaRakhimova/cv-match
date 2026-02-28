@@ -4,7 +4,7 @@
   padding: 1.5rem;
   border: 1px solid rgba(148, 163, 184, 0.3);
   box-shadow:
-    0 0 0 1px #38bdf814,
+    0 0 0 1px rgba(56, 189, 248, 0.08),
     0 18px 60px rgba(15, 23, 42, 0.7);
 }
 
@@ -164,23 +164,13 @@
   border-color: rgba(248, 113, 113, 0.5) !important;
 }
 
-.fieldResume .textarea {
-  border-color: rgba(34, 197, 94, 0.25);
-  background: linear-gradient(180deg, rgba(34, 197, 94, 0.04) 0%, rgba(15, 23, 42, 0.95) 30%);
-}
-
-.fieldJob .textarea {
-  border-color: rgba(56, 189, 248, 0.25);
-  background: linear-gradient(180deg, rgba(56, 189, 248, 0.04) 0%, rgba(15, 23, 42, 0.95) 30%);
-}
-
 @media (max-width: 600px) {
   .textarea {
     min-height: 140px;
     padding: 0.65rem 0.75rem;
-    font-size: 16px; 
+    font-size: 16px;
   }
-  
+
   .charCountBottom {
     bottom: -1.1rem;
     font-size: 0.6875rem;
@@ -189,18 +179,6 @@
 
 .textarea::placeholder {
   color: #64748b;
-}
-
-.fieldResume .textarea:focus {
-  outline: none;
-  border-color: rgba(34, 197, 94, 0.6);
-  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3);
-}
-
-.fieldJob .textarea:focus {
-  outline: none;
-  border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
 }
 
 .textarea::-webkit-scrollbar {
@@ -247,40 +225,5 @@
     align-items: stretch;
     margin-top: 0.75rem;
     gap: 0.5rem;
-  }
-}
-
-.infoSection {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  align-items: flex-end;
-}
-
-.smallLabel {
-  font-size: 0.875rem;
-  color: #94a3b8;
-}
-
-.smallLabel::before {
-  content: 'ℹ ';
-  color: #7dd3fc;
-  margin-right: 0.25rem;
-}
-
-.rateLimitInfo {
-  font-size: 0.75rem;
-  color: #fbbf24;
-  font-weight: 500;
-}
-
-@media (max-width: 600px) {
-  .infoSection {
-    align-items: center;
-    text-align: center;
-  }
-  
-  .smallLabel {
-    text-align: center;
   }
 }

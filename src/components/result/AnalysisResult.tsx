@@ -2,6 +2,8 @@ import React from 'react';
 import { AnalysisResult } from '../../types/analysis';
 import { LoadingSpinner } from '../loader/LoadingSpinner';
 import styles from './AnalysisResult.module.css';
+import { SkillsSection } from '../skills-section/SkillsSection';
+import { MatchScore } from '../match-score/MatchScore';
 
 interface AnalysisResultProps {
   loading: boolean;
@@ -19,14 +21,10 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
   return (
     <section className={styles.card}>
       <div className={styles.resultHeader}>
-        <div className={styles.scoreCircle}>
-            <>
-              <span className={styles.scoreValue}>
-                {result ? Math.round(result.matchScore) : '--'}
-              </span>
-              <span className={styles.scoreLabel}>match score</span>
-            </>
-        </div>
+        <MatchScore
+          score={result?.matchScore}
+          loading={loading}
+        />
       </div>
 
       {error && (
@@ -48,35 +46,19 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
 
       {result && !error && (
         <>
-          <section>
-            <h3 className={styles.sectionTitle}>Matching skills</h3>
-            {result.matchingSkills.length === 0 ? (
-              <p className={styles.muted}>No matching skills identified.</p>
-            ) : (
-              <div className={styles.pillRow}>
-                {result.matchingSkills.map((skill) => (
-                  <span className={styles.pillMatch} key={skill}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            )}
-          </section>
+          <SkillsSection
+            title="Matching skills"
+            skills={result.matchingSkills}
+            emptyMessage="No matching skills identified."
+            variant="match"
+          />
 
-          <section className={styles.sectionSpacing}>
-            <h3 className={styles.sectionTitle}>Missing or weak skills</h3>
-            {result.missingSkills.length === 0 ? (
-              <p className={styles.muted}>No clear gaps detected compared to this job posting.</p>
-            ) : (
-              <div className={styles.pillRow}>
-                {result.missingSkills.map((skill) => (
-                  <span className={styles.pill} key={skill}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            )}
-          </section>
+          <SkillsSection
+            title="Missing or weak skills"
+            skills={result.missingSkills}
+            emptyMessage="No clear gaps detected compared to this job posting."
+            variant="missing"
+          />
 
           <section className={styles.sectionSpacing}>
             <h3 className={styles.sectionTitle}>Location</h3>
@@ -143,7 +125,7 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
                 <span
                   className={
                     result.experienceComparison.resumeYears > 0 ||
-                    result.experienceComparison.requiredYears > 0
+                      result.experienceComparison.requiredYears > 0
                       ? result.experienceComparison.meetsRequirement
                         ? styles.matchYes
                         : styles.matchNo
@@ -151,7 +133,7 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({
                   }
                 >
                   {result.experienceComparison.resumeYears > 0 ||
-                  result.experienceComparison.requiredYears > 0
+                    result.experienceComparison.requiredYears > 0
                     ? result.experienceComparison.meetsRequirement
                       ? 'Yes'
                       : 'No'
