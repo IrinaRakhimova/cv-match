@@ -141,6 +141,21 @@ The project uses **CSS Modules** for component-scoped styling:
 - Edge (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
+## Deploying to Render
+
+This app is one **Web Service** (Node server serves both the API and the built React app). You must set these in the Render dashboard; the deploy will fail otherwise.
+
+1. Go to [dashboard.render.com](https://dashboard.render.com) → your **cv-match** Web Service.
+2. Open **Settings** in the left sidebar.
+3. Under **Build & Deploy**:
+   - **Build Command** — replace with: `npm install && npm run build`  
+     (If you leave only `npm install`, the frontend is never built and the server has nothing to serve.)
+   - **Start Command** — replace with: `npm start`  
+     (If you leave `node index.tsx`, Node will try to run a TypeScript file and crash.)
+4. **Save Changes**, then use **Manual Deploy** → **Deploy latest commit**.
+
+Environment variables: set `N8N_ANALYZE_URL` (your n8n webhook URL) in the **Environment** tab.
+
 ## Demo URL
 https://cv-match-1-n6uu.onrender.com/
 
