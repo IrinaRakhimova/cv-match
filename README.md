@@ -20,7 +20,19 @@ A modern web application that analyzes how well your resume matches a job descri
 - **TypeScript** - Type-safe JavaScript
 - **Webpack 5** - Module bundler
 - **CSS Modules** - Scoped styling
-- **n8n** - Backend workflow automation (via webhook)
+- **Node.js + Express** - Backend server (API, request logging, proxy to n8n)
+- **n8n** - Workflow automation (via webhook); the server proxies requests so the webhook URL stays server-side
+
+## Backend (Server)
+
+The app includes a **Node.js + Express** server that:
+
+- **Serves the API**: `GET /api/health` (health check) and `POST /api/analyze` (resume–job analysis).
+- **Proxies to n8n**: The frontend calls `/api/analyze`; the server forwards the request to your n8n webhook. The n8n URL is only in server environment variables, not in the browser.
+- **Request logging**: Logs method, path, status code, and duration for each request.
+- **Serves the frontend in production**: When deployed, the same server serves the built React app from `dist/` and the API, so one service handles everything.
+
+The server entry is `server.js`; in development you run it with `npm run server` (port 3001) alongside the frontend dev server (port 8080), or use `npm run dev:all` to run both.
 
 ## Workflow Structure
 Webhook Trigger → Data Extraction → AI Agent (OpenAI) → Response Formatting → Webhook Response
@@ -59,11 +71,22 @@ npm install
 
 ### Development
 
-Start the development server:
+You need both the **frontend** and the **backend** running.
+
+**Option 1 – one command (recommended):**
 ```bash
+npm run dev:all
+```
+Starts the Express server (port 3001) and the Webpack dev server (port 8080). The app at `http://localhost:8080` proxies `/api` to the backend.
+
+**Option 2 – two terminals:**
+```bash
+# Terminal 1 – backend
+npm run server
+
+# Terminal 2 – frontend
 npm run dev
 ```
-
 The application will open at `http://localhost:8080` with hot module replacement enabled.
 
 ### Building for Production
@@ -90,7 +113,7 @@ The optimized bundle will be output to the `dist/` directory.
 
 ## API Integration
 
-The application integrates with n8n workflows via webhook. The expected request format:
+The **frontend** calls the **server** at `POST /api/analyze`; the **server** forwards the request to your **n8n** webhook. The expected request format:
 
 ```typescript
 {
@@ -141,21 +164,6 @@ The project uses **CSS Modules** for component-scoped styling:
 - Edge (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Deploying to Render
-
-This app is one **Web Service** (Node server serves both the API and the built React app). You must set these in the Render dashboard; the deploy will fail otherwise.
-
-1. Go to [dashboard.render.com](https://dashboard.render.com) → your **cv-match** Web Service.
-2. Open **Settings** in the left sidebar.
-3. Under **Build & Deploy**:
-   - **Build Command** — replace with: `npm install && npm run build`  
-     (If you leave only `npm install`, the frontend is never built and the server has nothing to serve.)
-   - **Start Command** — replace with: `npm start`  
-     (If you leave `node index.tsx`, Node will try to run a TypeScript file and crash.)
-4. **Save Changes**, then use **Manual Deploy** → **Deploy latest commit**.
-
-Environment variables: set `N8N_ANALYZE_URL` (your n8n webhook URL) in the **Environment** tab.
-
 ## Demo URL
-https://cv-match-1-n6uu.onrender.com/
+https://cv-match-server.onrender.com/
 
