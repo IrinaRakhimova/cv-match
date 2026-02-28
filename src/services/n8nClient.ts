@@ -138,16 +138,27 @@ export async function analyzeResumeMatch(
 
     cleanup();
 
+    const rawText = await response.text().catch(() => '');
     if (!response.ok) {
-      const text = await response.text().catch(() => '');
       throw new Error(
         `Analysis request failed with status ${response.status}${
-          text ? `: ${text.slice(0, 200)}` : ''
+          rawText ? `: ${rawText.slice(0, 200)}` : ''
         }`,
       );
     }
 
-    const data = (await response.json()) as unknown;
+    if (!rawText || !rawText.trim()) {
+      throw new Error('Analysis request returned an empty response. The server may be starting up or the request timed out.');
+    }
+
+    let data: unknown;
+    try {
+      data = JSON.parse(rawText);
+    } catch {
+      throw new Error(
+        `Analysis request returned invalid data${rawText.length > 0 ? `: ${rawText.slice(0, 100)}` : ''}. The server may have returned an error page.`,
+      );
+    }
 
     if (!Array.isArray(data) || data.length === 0) {
       throw new Error('Invalid response from n8n: expected a non-empty array.');

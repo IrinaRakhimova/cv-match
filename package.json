@@ -1,7 +1,7 @@
 {
   "name": "slushnew",
   "version": "1.0.0",
-  "main": "index.tsx",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve",
