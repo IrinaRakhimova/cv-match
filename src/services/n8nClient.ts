@@ -6,7 +6,7 @@ import {
 } from '../types/analysis';
 import { sanitizeTextInput, validateTextContent } from '../utils/security';
 
-const N8N_ANALYZE_URL = process.env.N8N_ANALYZE_URL || '';
+const N8N_ANALYZE_URL = process.env.API_ANALYZE_URL || process.env.N8N_ANALYZE_URL || '';
 const REQUEST_TIMEOUT_MS = 30000; 
 
 

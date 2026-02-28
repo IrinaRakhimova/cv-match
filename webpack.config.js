@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');        
-require('dotenv').config();               
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   mode: 'development',
@@ -11,6 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
     clean: true,
   },
 
@@ -42,7 +43,6 @@ module.exports = {
           },
         ],
       },
-
       {
         test: /\.css$/,
         exclude: /\.module\.css$/,
@@ -55,16 +55,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-
     new webpack.EnvironmentPlugin({
-      N8N_ANALYZE_URL: '', 
+      N8N_ANALYZE_URL: '',
+      API_ANALYZE_URL: '/api/analyze',
     }),
   ],
 
   devServer: {
-    static: path.resolve(__dirname, 'public'),
     port: 8080,
     hot: true,
     open: true,
+    historyApiFallback: true,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    ],
   },
 };
