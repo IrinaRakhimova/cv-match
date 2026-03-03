@@ -123,12 +123,22 @@ export async function analyzeResumeMatch(
     }
   };
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (typeof sessionStorage !== 'undefined') {
+    if (sessionStorage.getItem('slush_auth_method') === 'skip') {
+      headers['X-Save-History'] = 'false';
+    } else {
+      const userId = sessionStorage.getItem('slush_user_id');
+      if (userId) headers['X-User-Id'] = userId;
+    }
+  }
+
   try {
     const response = await fetch(N8N_ANALYZE_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         resumeText: sanitizedResume,
         jobDescription: sanitizedJobDescription,

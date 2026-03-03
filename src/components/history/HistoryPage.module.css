@@ -1,0 +1,126 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.card {
+  background: linear-gradient(160deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 0 0 1px #38bdf814, 0 18px 60px rgba(15, 23, 42, 0.7);
+  overflow-x: auto;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.table th {
+  color: #94a3b8;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.table td {
+  color: #e2e8f0;
+}
+
+.table tbody tr:hover {
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.snippet {
+  max-width: 380px;
+  max-height: 4.5em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.scoreCell {
+  font-weight: 600;
+  color: #a7f3d0;
+}
+
+.empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem 1rem;
+}
+
+.loading {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem;
+}
+
+.error {
+  color: #f87171;
+  padding: 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.detailBack {
+  margin-bottom: 1rem;
+}
+
+.detailCard {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .table th,
+  .table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .snippet {
+    max-width: 160px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+}

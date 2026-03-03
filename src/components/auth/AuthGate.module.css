@@ -1,0 +1,116 @@
+.card {
+  background: linear-gradient(160deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow:
+    0 0 0 1px #38bdf814,
+    0 18px 60px rgba(15, 23, 42, 0.7);
+  max-width: 400px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.5rem 1rem;
+    border-radius: 0.875rem;
+  }
+}
+
+.cardHeader {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #e2e8f0;
+  margin: 0 0 0.5rem 0;
+}
+
+.pageSubtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.googleButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: #fff;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  min-height: 48px;
+}
+
+.googleButton:hover {
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.googleButton:active {
+  background: #f1f5f9;
+}
+
+.googleIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.skipButton {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.skipButton:hover {
+  color: #e2e8f0;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.3), transparent);
+}
+
+.divider span {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
