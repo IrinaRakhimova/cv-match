@@ -113,9 +113,11 @@ export const App: React.FC = () => {
               <div className={styles.headerWithButton}>
                 <h1 className={styles.pageTitle}>Resume match analyzer</h1>
                 <div className={styles.headerActions}>
-                  <Button type="button" variant="secondary" onClick={() => setView('history')}>
-                    History
-                  </Button>
+                  {authMethod === 'google' && (
+                    <Button type="button" variant="secondary" onClick={() => setView('history')}>
+                      History
+                    </Button>
+                  )}
                   {authButton}
                 </div>
               </div>
@@ -133,9 +135,11 @@ export const App: React.FC = () => {
               <div className={styles.headerWithButton}>
                 <h1 className={styles.pageTitle}>Resume Match Analysis</h1>
                 <div className={styles.headerActions}>
-                  <Button type="button" variant="secondary" onClick={() => setView('history')}>
-                    History
-                  </Button>
+                  {authMethod === 'google' && (
+                    <Button type="button" variant="secondary" onClick={() => setView('history')}>
+                      History
+                    </Button>
+                  )}
                   {authButton}
                   <Button type="button" variant="primary" onClick={handleNextPosition}>
                     Analyze next position
