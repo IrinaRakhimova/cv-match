@@ -1,7 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-require('dotenv').config();
+
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+const GOOGLE_CLIENT_ID = (process.env.GOOGLE_CLIENT_ID || '').trim();
+if (!GOOGLE_CLIENT_ID) {
+  console.warn('SlushNew: GOOGLE_CLIENT_ID is empty. Add it to .env to show "Sign in with Google".');
+}
 
 module.exports = {
   mode: 'development',
@@ -58,6 +64,10 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       N8N_ANALYZE_URL: '',
       API_ANALYZE_URL: '/api/analyze',
+      GOOGLE_CLIENT_ID: '',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.GOOGLE_CLIENT_ID': JSON.stringify(GOOGLE_CLIENT_ID),
     }),
   ],
 

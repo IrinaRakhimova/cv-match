@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const historyStore = require('./historyStore');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -22,6 +23,23 @@ app.use((req, res, next) => {
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true });
 });
+
+function parseN8nResult(data) {
+  if (!Array.isArray(data) || data.length === 0) return null;
+  const first = data[0];
+  const output = first?.output;
+  if (!output || typeof output !== 'object') return null;
+  const { matchScore, matchingSkills, missingSkills, locationComparison, experienceComparison, suggestions } = output;
+  if (typeof matchScore !== 'number') return null;
+  return {
+    matchScore,
+    matchingSkills: Array.isArray(matchingSkills) ? matchingSkills : [],
+    missingSkills: Array.isArray(missingSkills) ? missingSkills : [],
+    locationComparison: locationComparison && typeof locationComparison === 'object' ? locationComparison : {},
+    experienceComparison: experienceComparison && typeof experienceComparison === 'object' ? experienceComparison : {},
+    suggestions: Array.isArray(suggestions) ? suggestions : [],
+  };
+}
 
 app.post('/api/analyze', async (req, res) => {
   if (!N8N_ANALYZE_URL) {
@@ -46,6 +64,18 @@ app.post('/api/analyze', async (req, res) => {
     clearTimeout(timeoutId);
 
     const data = await response.json().catch(() => ({}));
+    const skipHistory = req.get('X-Save-History') === 'false';
+    const userId = req.get('X-User-Id') || '';
+    if (response.ok && !skipHistory && userId) {
+      const result = parseN8nResult(data);
+      if (result) {
+        try {
+          historyStore.add(userId, resumeText, jobDescription, result);
+        } catch (err) {
+          console.error('Failed to save to history:', err.message);
+        }
+      }
+    }
     res.status(response.status).json(data);
   } catch (err) {
     clearTimeout(timeoutId);
@@ -57,7 +87,27 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
-// In production, serve the built React app so one deploy handles both API and frontend
+app.get('/api/history', (req, res) => {
+  try {
+    const userId = req.get('X-User-Id') || '';
+    const list = historyStore.list(userId);
+    res.json(list);
+  } catch (err) {
+    console.error('History list error:', err.message);
+    res.status(500).json({ error: 'Failed to load history.' });
+  }
+});
+
+app.get('/api/history/:id', (req, res) => {
+  const userId = req.get('X-User-Id') || '';
+  const id = req.params.id;
+  const entry = historyStore.getById(userId, id);
+  if (!entry) {
+    return res.status(404).json({ error: 'Not found.' });
+  }
+  res.json(entry);
+});
+
 if (isProduction) {
   const distPath = path.join(__dirname, 'dist');
   app.use(express.static(distPath));

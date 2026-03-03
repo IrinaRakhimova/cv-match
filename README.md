@@ -2,6 +2,8 @@
 
 A modern web application that analyzes how well your resume matches a job description. Get instant insights on matching skills, missing skills, location compatibility, experience requirements, and actionable suggestions for improvement.
 
+**Updated version** includes **Google authentication** (optional sign-in or skip) and **per-user history** so you can revisit past analyses.
+
 ## Features
 
 - **Resume & Job Description Analysis**: Paste your resume and job description to get a comprehensive match analysis
@@ -11,6 +13,9 @@ A modern web application that analyzes how well your resume matches a job descri
 - **Location Comparison**: Compare resume location with job location and see if they match
 - **Experience Analysis**: Compare your years of experience with the job requirements
 - **Actionable Suggestions**: Get specific recommendations to improve your resume
+- **Google Sign-In (optional)**: Sign in with Google to save analyses to your personal history, or skip and use the app without an account
+- **History**: View and reopen past analyses in a table; each signed-in user sees only their own history
+- **Sign in / Log out**: Sign in from the header when you skipped initially, or log out to return to the welcome screen
 - **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
 - **Modern UI**: Beautiful dark theme with smooth animations and intuitive interface
 
@@ -27,8 +32,9 @@ A modern web application that analyzes how well your resume matches a job descri
 
 The app includes a **Node.js + Express** server that:
 
-- **Serves the API**: `GET /api/health` (health check) and `POST /api/analyze` (resume–job analysis).
+- **Serves the API**: `GET /api/health` (health check), `POST /api/analyze` (resume–job analysis), `GET /api/history` (list past analyses), and `GET /api/history/:id` (single analysis).
 - **Proxies to n8n**: The frontend calls `/api/analyze`; the server forwards the request to your n8n webhook. The n8n URL is only in server environment variables, not in the browser.
+- **History storage**: Saves each successful analysis to a per-user JSON file under `data/` when the user is signed in (Google). History is keyed by Google user ID so each user sees only their own results.
 - **Request logging**: Logs method, path, status code, and duration for each request.
 - **Serves the frontend in production**: When deployed, the same server serves the built React app from `dist/` and the API, so one service handles everything.
 
@@ -66,8 +72,9 @@ cd cv-match
 npm install
 ```
 
-3. Configure the n8n webhook URL:
-   - Update `N8N_ANALYZE_URL` with your n8n webhook endpoint
+3. **Add a `.env` file** in the project root to run locally. You need this file for local development; the server and the frontend build read environment variables from it. Create `.env` in the project root (it is gitignored). Add at least:
+   - **N8N_ANALYZE_URL** – your n8n webhook endpoint for resume analysis
+   - **GOOGLE_CLIENT_ID** (optional) – Google OAuth 2.0 client ID for sign-in; if set, users can sign in with Google and get per-user history. Add `http://localhost:8080` (and your production URL) to **Authorized JavaScript origins** and **Authorized redirect URIs** in [Google Cloud Console](https://console.cloud.google.com/) → Credentials.
 
 ### Development
 
@@ -100,16 +107,19 @@ The optimized bundle will be output to the `dist/` directory.
 
 ## Usage
 
-1. **Start Analysis**: On the home page, paste your resume text in the left field and the job description in the right field
-2. **Analyze**: Click "Analyze match" to send both texts for AI analysis
-3. **View Results**: 
+1. **Welcome screen**: Choose **Sign in with Google** (to save analyses to your history) or **Skip for now** to use the app without an account. You can sign in later from the header.
+2. **Start Analysis**: On the home page, paste your resume text in the left field and the job description in the right field.
+3. **Analyze**: Click "Analyze match" to send both texts for AI analysis. If you’re signed in, the result is saved to your history.
+4. **View Results**:
    - See your match score in the prominent badge
    - Review matching skills (highlighted in green)
    - Check missing or weak skills (highlighted in red)
    - Compare location and experience requirements
    - Read actionable suggestions for improvement
-4. **Review Content**: Scroll down to see the resume and job description you submitted
-5. **Next Position**: Click "Analyze next position" to start a new analysis
+5. **Review Content**: Scroll down to see the resume and job description you submitted.
+6. **History**: Click **History** in the header to open a table of your past analyses (date, match score, snippets). Click **View** on a row to see the full result again.
+7. **Sign in / Log out**: Use **Sign in** in the header when you skipped at first; use **Log out** to return to the welcome screen.
+8. **Next Position**: Click "Analyze next position" to start a new analysis.
 
 ## API Integration
 
